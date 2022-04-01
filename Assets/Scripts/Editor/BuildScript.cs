@@ -37,7 +37,7 @@ public class BuildScript
     public static void BuildAndroid()
     {
         string buildVersion = "1", buildVersionCode = "1", buildNameForQuest = "AutomatedBuildQuest_QA";
-        string timeStamp = "_" + System.DateTime.Now.Month.ToString() + System.DateTime.Now.Day.ToString() + "_" + System.DateTime.Now.Hour.ToString() + "_" + System.DateTime.Now.Minute.ToString();
+        string timeStamp = "_" + System.DateTime.Now.Month.ToString() + "/" + System.DateTime.Now.Day.ToString() + "/" + System.DateTime.Now.Hour.ToString() + ":" + System.DateTime.Now.Minute.ToString();
 
 
         /*
@@ -58,7 +58,7 @@ public class BuildScript
         BuildPlayerOptions buildPlayerOptionsAndroid = new BuildPlayerOptions();
         buildPlayerOptionsAndroid.scenes = defaultScene;
         //buildPlayerOptionsAndroid.locationPathName = "../BuildsOutput/Quest/" + buildNameForQuest + ".apk";
-        buildPlayerOptionsAndroid.locationPathName = "BuildsOutput/Quest/Build/" + buildNameForQuest + "_" + buildVersion + "_" + buildVersionCode + timeStamp + ".apk";
+        buildPlayerOptionsAndroid.locationPathName = "BuildsOutput/Quest/Build/" + buildNameForQuest + "_" + buildVersion + ":" + buildVersionCode + timeStamp + ".apk";
         buildPlayerOptionsAndroid.target = BuildTarget.Android;
         buildPlayerOptionsAndroid.options = BuildOptions.None;
 
