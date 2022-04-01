@@ -36,7 +36,7 @@ public class BuildScript
 
     public static void BuildAndroid()
     {
-        string buildVersion = "1", buildVersionCode = "1", buildNameForQuest = "AutomatedBuildQuest";
+        string buildVersion = "1", buildVersionCode = "1", buildNameForQuest = "AutomatedBuildQuest_QA";
 
 
         /*
@@ -50,24 +50,26 @@ public class BuildScript
         string[] defaultScene = { "Assets/Scenes/Scene1.unity", "Assets/Scenes/Scene2.unity", "Assets/Scenes/Scene3.unity" };
         // BuildPipeline.BuildPlayer(defaultScene, "../BuildsOutput/Quest/AutomatedBuildQuest.apk", BuildTarget.Android, BuildOptions.None);
 
+        buildVersion = PlayerSettings.bundleVersion;
+        buildVersionCode = PlayerSettings.Android.bundleVersionCode.ToString();
 
 
         BuildPlayerOptions buildPlayerOptionsAndroid = new BuildPlayerOptions();
         buildPlayerOptionsAndroid.scenes = defaultScene;
         //buildPlayerOptionsAndroid.locationPathName = "../BuildsOutput/Quest/" + buildNameForQuest + ".apk";
-        buildPlayerOptionsAndroid.locationPathName = "BuildsOutput/Quest/Build/" + buildNameForQuest + ".apk";
+        buildPlayerOptionsAndroid.locationPathName = "BuildsOutput/Quest/Build/" + buildNameForQuest + "_bVer_" + buildVersion + "_bVerCode_" + buildVersionCode + ".apk";
         buildPlayerOptionsAndroid.target = BuildTarget.Android;
         buildPlayerOptionsAndroid.options = BuildOptions.None;
 
-       // PlayerSettings.Android.useCustomKeystore = false;
+        // PlayerSettings.Android.useCustomKeystore = false;
         PlayerSettings.Android.useCustomKeystore = true;
         PlayerSettings.Android.keystoreName = "Assets/Others/KeyStore/userAutoMatedBuild.keystore";
         PlayerSettings.Android.keystorePass = "8dsp?Q7mS87fHxRG";
         PlayerSettings.Android.keyaliasName = "district m key";
         PlayerSettings.Android.keyaliasPass = "8dsp?Q7mS87fHxRG";
 
-        PlayerSettings.bundleVersion = buildVersion;
-        PlayerSettings.Android.bundleVersionCode = int.Parse(buildVersionCode);
+        // PlayerSettings.bundleVersion = buildVersion;
+        // PlayerSettings.Android.bundleVersionCode = int.Parse(buildVersionCode);
 
         BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptionsAndroid);
         BuildSummary buildSummary = buildReport.summary;
@@ -85,13 +87,15 @@ public class BuildScript
         commandToValueDictionary.TryGetValue(BuildNameCommandPCVR, out buildNameForPCVR);
         */
 
+        buildVersion = PlayerSettings.bundleVersion;
+
         BuildPlayerOptions buildPlayerOptionsWindows = new BuildPlayerOptions();
         buildPlayerOptionsWindows.scenes = defaultScene;
         buildPlayerOptionsWindows.locationPathName = "BuildsOutput/PCVR/Build" + buildNameForPCVR + ".exe";
         buildPlayerOptionsWindows.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptionsWindows.options = BuildOptions.None;
 
-        PlayerSettings.bundleVersion = buildVersion;
+        // PlayerSettings.bundleVersion = buildVersion;
 
         BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptionsWindows);
         BuildSummary buildSummary = buildReport.summary;
