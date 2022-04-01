@@ -26,8 +26,6 @@ public class BuildScript
 
     public static void PerformBuild()
     {
-        commandToValueDictionary = GetCommandLineArguments();
-
         BuildAndroid();
         //BuildWindows();
     }
@@ -40,7 +38,9 @@ public class BuildScript
     {
         string buildVersion = "1", buildVersionCode = "1", buildNameForQuest = "AutomatedBuildQuest";
 
+
         /*
+                commandToValueDictionary = GetCommandLineArguments();
         // Dictionary<string, string> commandToValueDictionary = GetCommandLineArguments();
         commandToValueDictionary.TryGetValue(BuildVersionCommandQuest, out buildVersion);
         commandToValueDictionary.TryGetValue(BuildVersionCodeCommandQuest, out buildVersionCode);
@@ -55,7 +55,7 @@ public class BuildScript
         BuildPlayerOptions buildPlayerOptionsAndroid = new BuildPlayerOptions();
         buildPlayerOptionsAndroid.scenes = defaultScene;
         //buildPlayerOptionsAndroid.locationPathName = "../BuildsOutput/Quest/" + buildNameForQuest + ".apk";
-        buildPlayerOptionsAndroid.locationPathName = "BuildsOutput/Quest/AutomatedBuildQuest02.apk";
+        buildPlayerOptionsAndroid.locationPathName = "BuildsOutput/Quest/Build/" + buildNameForQuest + ".apk";
         buildPlayerOptionsAndroid.target = BuildTarget.Android;
         buildPlayerOptionsAndroid.options = BuildOptions.None;
 
@@ -76,18 +76,21 @@ public class BuildScript
         BuildSummary buildSummary = buildReport.summary;
     }
 
-    public static void BuildWindows()
+    public static void BuildPCVR()
     {
-        string buildVersion = "1", buildNameForPCVR = "AutomatedBuildWindows";
+        string buildVersion = "1", buildNameForPCVR = "AutomatedBuildPCVR";
 
         string[] defaultScene = { "Assets/Scenes/Scene1.unity", "Assets/Scenes/Scene2.unity", "Assets/Scenes/Scene3.unity" };
 
+        /*
+        commandToValueDictionary = GetCommandLineArguments();
         commandToValueDictionary.TryGetValue(BuildVersionCodeCommandPCVR, out buildVersion);
         commandToValueDictionary.TryGetValue(BuildNameCommandPCVR, out buildNameForPCVR);
+        */
 
         BuildPlayerOptions buildPlayerOptionsWindows = new BuildPlayerOptions();
         buildPlayerOptionsWindows.scenes = defaultScene;
-        buildPlayerOptionsWindows.locationPathName = "../BuildsOutput/Windows/" + buildNameForPCVR + ".exe";
+        buildPlayerOptionsWindows.locationPathName = "BuildsOutput/PCVR/Build" + buildNameForPCVR + ".exe";
         buildPlayerOptionsWindows.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptionsWindows.options = BuildOptions.None;
 
