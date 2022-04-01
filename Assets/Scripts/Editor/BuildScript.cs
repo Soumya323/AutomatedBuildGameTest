@@ -40,12 +40,13 @@ public class BuildScript
     {
         string buildVersion = "1", buildVersionCode = "1", buildNameForQuest = "AutomatedBuildQuest";
 
+        /*
         // Dictionary<string, string> commandToValueDictionary = GetCommandLineArguments();
         commandToValueDictionary.TryGetValue(BuildVersionCommandQuest, out buildVersion);
         commandToValueDictionary.TryGetValue(BuildVersionCodeCommandQuest, out buildVersionCode);
         commandToValueDictionary.TryGetValue(BuildApkNameCommandQuest, out buildNameForQuest);
+        */
 
-        System.Console.WriteLine("Building Android");
         string[] defaultScene = { "Assets/Scenes/Scene1.unity", "Assets/Scenes/Scene2.unity", "Assets/Scenes/Scene3.unity" };
         // BuildPipeline.BuildPlayer(defaultScene, "../BuildsOutput/Quest/AutomatedBuildQuest.apk", BuildTarget.Android, BuildOptions.None);
 
@@ -53,10 +54,11 @@ public class BuildScript
 
         BuildPlayerOptions buildPlayerOptionsAndroid = new BuildPlayerOptions();
         buildPlayerOptionsAndroid.scenes = defaultScene;
-        buildPlayerOptionsAndroid.locationPathName = "../BuildsOutput/Quest/" + buildNameForQuest + ".apk";
+        // buildPlayerOptionsAndroid.locationPathName = "../BuildsOutput/Quest/" + buildNameForQuest + ".apk";
         buildPlayerOptionsAndroid.target = BuildTarget.Android;
         buildPlayerOptionsAndroid.options = BuildOptions.None;
 
+        /*
 
         PlayerSettings.Android.useCustomKeystore = true;
         PlayerSettings.Android.keystoreName = "Assets/Others/KeyStore/userAutoMatedBuild.keystore";
@@ -67,9 +69,10 @@ public class BuildScript
         PlayerSettings.bundleVersion = buildVersion;
         PlayerSettings.Android.bundleVersionCode = int.Parse(buildVersionCode);
 
+        */
 
         BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptionsAndroid);
-        BuildSummary buildSummary = buildReport.summary;
+        // BuildSummary buildSummary = buildReport.summary;
     }
 
     public static void BuildWindows()
