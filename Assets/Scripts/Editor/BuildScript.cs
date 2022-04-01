@@ -54,7 +54,8 @@ public class BuildScript
 
         BuildPlayerOptions buildPlayerOptionsAndroid = new BuildPlayerOptions();
         buildPlayerOptionsAndroid.scenes = defaultScene;
-        buildPlayerOptionsAndroid.locationPathName = "../BuildsOutput/Quest/" + buildNameForQuest + ".apk";
+        //buildPlayerOptionsAndroid.locationPathName = "../BuildsOutput/Quest/" + buildNameForQuest + ".apk";
+        buildPlayerOptionsAndroid.locationPathName = "/BuildsOutput/Quest/AutomatedBuildQuest02.apk";
         buildPlayerOptionsAndroid.target = BuildTarget.Android;
         buildPlayerOptionsAndroid.options = BuildOptions.None;
 
@@ -72,7 +73,7 @@ public class BuildScript
         */
 
         BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptionsAndroid);
-        // BuildSummary buildSummary = buildReport.summary;
+        BuildSummary buildSummary = buildReport.summary;
     }
 
     public static void BuildWindows()
