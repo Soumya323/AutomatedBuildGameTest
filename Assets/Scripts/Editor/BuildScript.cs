@@ -37,7 +37,7 @@ public class BuildScript
     public static void BuildAndroid()
     {
         string buildVersion = "1", buildVersionCode = "1", buildNameForQuest = "AutomatedBuildQuest_QA";
-        string timeStamp = "_" + System.DateTime.Now.Month.ToString() + System.DateTime.Now.Day.ToString() + "_" + System.DateTime.Now.Hour.ToString() + ":" + System.DateTime.Now.Minute.ToString();
+        string timeStamp = "_" + System.DateTime.Now.Month.ToString() + System.DateTime.Now.Day.ToString() + "_" + System.DateTime.Now.Hour.ToString() + "_" + System.DateTime.Now.Minute.ToString();
 
 
         /*
