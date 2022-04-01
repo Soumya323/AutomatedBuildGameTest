@@ -59,8 +59,7 @@ public class BuildScript
         buildPlayerOptionsAndroid.target = BuildTarget.Android;
         buildPlayerOptionsAndroid.options = BuildOptions.None;
 
-        PlayerSettings.Android.useCustomKeystore = false;
-        /*
+       // PlayerSettings.Android.useCustomKeystore = false;
         PlayerSettings.Android.useCustomKeystore = true;
         PlayerSettings.Android.keystoreName = "Assets/Others/KeyStore/userAutoMatedBuild.keystore";
         PlayerSettings.Android.keystorePass = "8dsp?Q7mS87fHxRG";
@@ -69,8 +68,6 @@ public class BuildScript
 
         PlayerSettings.bundleVersion = buildVersion;
         PlayerSettings.Android.bundleVersionCode = int.Parse(buildVersionCode);
-
-        */
 
         BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptionsAndroid);
         BuildSummary buildSummary = buildReport.summary;
