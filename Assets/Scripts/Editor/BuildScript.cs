@@ -104,7 +104,7 @@ public class BuildScript
 
         BuildPlayerOptions buildPlayerOptionsWindows = new BuildPlayerOptions();
         buildPlayerOptionsWindows.scenes = allBuildScenes;
-        buildPlayerOptionsWindows.locationPathName = "BuildsOutput/PCVR/Build" + buildNameForPCVR + timeStamp + ".exe";
+        buildPlayerOptionsWindows.locationPathName = "BuildsOutput/PCVR/Build/" + buildNameForPCVR + timeStamp + ".exe";
         buildPlayerOptionsWindows.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptionsWindows.options = BuildOptions.None;
 
