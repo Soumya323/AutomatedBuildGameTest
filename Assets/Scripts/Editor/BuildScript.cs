@@ -2,6 +2,7 @@ using UnityEditor;
 using UnityEditor.Build.Reporting;
 using System.Collections.Generic;
 using System;
+using UnityEditor.SceneManagement;
 
 public class BuildScript
 {
@@ -23,7 +24,6 @@ public class BuildScript
     #endregion
     /**************************************************************************************************************************************/
 
-
     public static void PerformBuild()
     {
         BuildAndroid();
@@ -37,7 +37,7 @@ public class BuildScript
     public static void BuildAndroid()
     {
         string buildVersion = "1", buildVersionCode = "1", buildNameForQuest = "AutomatedBuildQuest_QA";
-        string timeStamp = "_" + System.DateTime.Now.Month.ToString() + "_" + System.DateTime.Now.Day.ToString() + "_" + System.DateTime.Now.Hour.ToString() + "_" + System.DateTime.Now.Minute.ToString();
+        string timeStamp = "_" + System.DateTime.Now.Month.ToString() + "M" + System.DateTime.Now.Day.ToString() + "D" + System.DateTime.Now.Hour.ToString() + "H" + System.DateTime.Now.Minute.ToString() + "m";
 
 
         /*
@@ -48,7 +48,13 @@ public class BuildScript
         commandToValueDictionary.TryGetValue(BuildApkNameCommandQuest, out buildNameForQuest);
         */
 
-        string[] defaultScene = { "Assets/Scenes/Scene1.unity", "Assets/Scenes/Scene2.unity", "Assets/Scenes/Scene3.unity" };
+        List<string> scenePaths = new List<string>();
+        foreach (EditorBuildSettingsScene scenePath in EditorBuildSettings.scenes)
+        {
+            scenePaths.Add(scenePath.path);
+        }
+        string[] allBuildScenes = scenePaths.ToArray();
+        //string[] defaultScene = { "Assets/Scenes/Scene1.unity", "Assets/Scenes/Scene2.unity", "Assets/Scenes/Scene3.unity" };
         // BuildPipeline.BuildPlayer(defaultScene, "../BuildsOutput/Quest/AutomatedBuildQuest.apk", BuildTarget.Android, BuildOptions.None);
 
         buildVersion = PlayerSettings.bundleVersion;
@@ -56,7 +62,7 @@ public class BuildScript
 
 
         BuildPlayerOptions buildPlayerOptionsAndroid = new BuildPlayerOptions();
-        buildPlayerOptionsAndroid.scenes = defaultScene;
+        buildPlayerOptionsAndroid.scenes = allBuildScenes;
         //buildPlayerOptionsAndroid.locationPathName = "../BuildsOutput/Quest/" + buildNameForQuest + ".apk";
         buildPlayerOptionsAndroid.locationPathName = "BuildsOutput/Quest/Build/" + buildNameForQuest + "_" + buildVersion + "_" + buildVersionCode + timeStamp + ".apk";
         buildPlayerOptionsAndroid.target = BuildTarget.Android;
@@ -79,10 +85,15 @@ public class BuildScript
     public static void BuildPCVR()
     {
         string buildVersion = "1", buildNameForPCVR = "AutomatedBuildPCVR";
-        string timeStamp = "_" + System.DateTime.Now.Month.ToString() + System.DateTime.Now.Day.ToString() + "_" + System.DateTime.Now.Hour.ToString() + "_" + System.DateTime.Now.Minute.ToString();
+        string timeStamp = "_" + System.DateTime.Now.Month.ToString() + "M" + System.DateTime.Now.Day.ToString() + "D" + System.DateTime.Now.Hour.ToString() + "H" + System.DateTime.Now.Minute.ToString() + "m";
 
-        string[] defaultScene = { "Assets/Scenes/Scene1.unity", "Assets/Scenes/Scene2.unity", "Assets/Scenes/Scene3.unity" };
-
+        List<string> scenePaths = new List<string>();
+        foreach (EditorBuildSettingsScene scenePath in EditorBuildSettings.scenes)
+        {
+            scenePaths.Add(scenePath.path);
+        }
+        string[] allBuildScenes = scenePaths.ToArray();
+        //string[] defaultScene = { "Assets/Scenes/Scene1.unity", "Assets/Scenes/Scene2.unity", "Assets/Scenes/Scene3.unity" };
         /*
         commandToValueDictionary = GetCommandLineArguments();
         commandToValueDictionary.TryGetValue(BuildVersionCodeCommandPCVR, out buildVersion);
@@ -92,7 +103,7 @@ public class BuildScript
         buildVersion = PlayerSettings.bundleVersion;
 
         BuildPlayerOptions buildPlayerOptionsWindows = new BuildPlayerOptions();
-        buildPlayerOptionsWindows.scenes = defaultScene;
+        buildPlayerOptionsWindows.scenes = allBuildScenes;
         buildPlayerOptionsWindows.locationPathName = "BuildsOutput/PCVR/Build" + buildNameForPCVR + timeStamp + ".exe";
         buildPlayerOptionsWindows.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptionsWindows.options = BuildOptions.None;
