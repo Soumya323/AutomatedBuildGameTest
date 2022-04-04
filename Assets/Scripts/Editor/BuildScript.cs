@@ -3,6 +3,7 @@ using UnityEditor.Build.Reporting;
 using System.Collections.Generic;
 using System;
 using UnityEditor.SceneManagement;
+using System.IO;
 
 public class BuildScript
 {
@@ -23,22 +24,13 @@ public class BuildScript
     /**************************************************************************************************************************************/
     #endregion
     /**************************************************************************************************************************************/
-
-    public static void PerformBuild()
-    {
-        // BuildAndroid();
-        //BuildWindows();
-    }
-
-    /**************************************************************************************************************************************/
     #region Final Build methods for Android and Windows
     /**************************************************************************************************************************************/
 
     public static void BuildAndroid()
     {
-        string buildVersion = "1", buildVersionCode = "1", buildNameForQuest = "AutomatedBuildQuest_QA";
+        string buildVersion = "1", buildVersionCode = "1", buildNameForQuestBase = "AutomatedBuildQuest_QA";
         string timeStamp = "_" + System.DateTime.Now.Month.ToString() + "M" + System.DateTime.Now.Day.ToString() + "D" + System.DateTime.Now.Hour.ToString() + "H" + System.DateTime.Now.Minute.ToString() + "m";
-
 
         /*
                 commandToValueDictionary = GetCommandLineArguments();
@@ -64,7 +56,8 @@ public class BuildScript
         BuildPlayerOptions buildPlayerOptionsAndroid = new BuildPlayerOptions();
         buildPlayerOptionsAndroid.scenes = allBuildScenes;
         //buildPlayerOptionsAndroid.locationPathName = "../BuildsOutput/Quest/" + buildNameForQuest + ".apk";
-        buildPlayerOptionsAndroid.locationPathName = "BuildsOutput/Quest/Build/" + buildNameForQuest + "_" + buildVersion + "_" + buildVersionCode + timeStamp + ".apk";
+        string fullBuildNameForQuest = buildNameForQuestBase + "_" + buildVersion + "_" + buildVersionCode + timeStamp;
+        buildPlayerOptionsAndroid.locationPathName = "BuildsOutput/Quest/Build/" + fullBuildNameForQuest + ".apk";
         buildPlayerOptionsAndroid.target = BuildTarget.Android;
         buildPlayerOptionsAndroid.options = BuildOptions.None;
 
@@ -75,8 +68,7 @@ public class BuildScript
         PlayerSettings.Android.keyaliasName = "district m key";
         PlayerSettings.Android.keyaliasPass = "8dsp?Q7mS87fHxRG";
 
-        // PlayerSettings.bundleVersion = buildVersion;
-        // PlayerSettings.Android.bundleVersionCode = int.Parse(buildVersionCode);
+        WriteBuildNameToFile(BuildTarget.StandaloneWindows64, fullBuildNameForQuest);
 
         BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptionsAndroid);
         BuildSummary buildSummary = buildReport.summary;
@@ -84,7 +76,7 @@ public class BuildScript
 
     public static void BuildPCVR()
     {
-        string buildVersion = "1", buildNameForPCVR = "AutomatedBuildPCVR";
+        string buildVersion = "1", baseBuildNameForPCVR = "AutomatedBuildPCVR";
         string timeStamp = "_" + System.DateTime.Now.Month.ToString() + "M" + System.DateTime.Now.Day.ToString() + "D" + System.DateTime.Now.Hour.ToString() + "H" + System.DateTime.Now.Minute.ToString() + "m";
 
         List<string> scenePaths = new List<string>();
@@ -104,15 +96,34 @@ public class BuildScript
 
         BuildPlayerOptions buildPlayerOptionsWindows = new BuildPlayerOptions();
         buildPlayerOptionsWindows.scenes = allBuildScenes;
-        buildPlayerOptionsWindows.locationPathName = "BuildsOutput/PCVR/Build/" + buildNameForPCVR + timeStamp + ".exe";
+        string fullBuildNameForPCVR = baseBuildNameForPCVR + "_" + buildVersion + "_" + timeStamp;
+        buildPlayerOptionsWindows.locationPathName = "BuildsOutput/PCVR/Build/" + fullBuildNameForPCVR + ".exe";
         buildPlayerOptionsWindows.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptionsWindows.options = BuildOptions.None;
 
-        // PlayerSettings.bundleVersion = buildVersion;
+        WriteBuildNameToFile(BuildTarget.StandaloneWindows64, fullBuildNameForPCVR);
 
         BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptionsWindows);
         BuildSummary buildSummary = buildReport.summary;
         // BuildPipeline.BuildPlayer(defaultScene, "./Builds/Windows/WindowsTestBuild.exe", BuildTarget.StandaloneWindows64, BuildOptions.None);
+    }
+
+    /**************************************************************************************************************************************/
+    #endregion
+    /**************************************************************************************************************************************/
+    #region Write the build name to text file
+    /**************************************************************************************************************************************/
+
+    private static void WriteBuildNameToFile(BuildTarget buildTarget, string buildName)
+    {
+        string path = "";
+        if (buildTarget == BuildTarget.Android)
+            path = "BuildsOutput/Quest/" + "BuildNameQuest.txt";
+        else
+            path = "BuildsOutput/PCVR/" + "BuildNamePCVR.txt";
+        StreamWriter writer = new StreamWriter(path, true);
+        writer.WriteLine(buildName);
+        writer.Close();
     }
 
     /**************************************************************************************************************************************/
