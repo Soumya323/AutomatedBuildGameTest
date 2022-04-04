@@ -26,7 +26,7 @@ public class BuildScript
 
     public static void PerformBuild()
     {
-        BuildAndroid();
+        // BuildAndroid();
         //BuildWindows();
     }
 
