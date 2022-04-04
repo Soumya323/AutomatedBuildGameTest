@@ -101,7 +101,7 @@ public class BuildScript
             path = "BuildsOutput/Quest/" + "BuildNameQuest.txt";
         else
             path = "BuildsOutput/PCVR/" + "BuildNamePCVR.txt";
-        StreamWriter writer = new StreamWriter(path, true);
+        StreamWriter writer = new StreamWriter(path, false);
         writer.WriteLine(buildName);
         writer.Close();
     }
