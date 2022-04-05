@@ -103,13 +103,12 @@ public class BuildScript
             path = "BuildsOutput/PCVR/" + "BuildNamePCVR.txt";
         StreamWriter writer = default;
         if (File.Exists(path) == false)
-            File.AppendAllText(path, buildName);
-        else
         {
-            writer = new StreamWriter(path, false);
-            writer.WriteLine(buildName);
-            writer.Close();
+            File.Create(path);
         }
+        writer = new StreamWriter(path, false);
+        writer.WriteLine(buildName);
+        writer.Close();
     }
 
     /**************************************************************************************************************************************/
