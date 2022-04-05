@@ -81,11 +81,11 @@ public class BuildScript
         buildPlayerOptionsWindows.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptionsWindows.options = BuildOptions.None;
 
-        BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptionsWindows);
-        BuildSummary buildSummary = buildReport.summary;
-
         // Write the build name to file
         WriteBuildNameToFile(BuildTarget.StandaloneWindows64, fullBuildNameForPCVR);
+
+        BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptionsWindows);
+        BuildSummary buildSummary = buildReport.summary;
     }
 
     /**************************************************************************************************************************************/
