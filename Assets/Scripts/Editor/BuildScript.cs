@@ -103,7 +103,7 @@ public class BuildScript
             path = "BuildsOutput/PCVR/" + "BuildNamePCVR.txt";
         StreamWriter writer = default;
         if (File.Exists(path) == false)
-            writer = File.AppendText(path);
+            writer = new StreamWriter(File.Open(path, System.IO.FileMode.Append));
         else
             writer = new StreamWriter(path, false);
         writer.WriteLine(buildName);
