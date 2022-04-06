@@ -58,6 +58,9 @@ public class BuildScript
 
     public static void BuildPCVR()
     {
+        AutoLightBaker autoLightBaker = new AutoLightBaker();
+        autoLightBaker.BakeLightingForScenesInBuildSettings();
+
         string buildVersion = "1", baseBuildNameForPCVR = "AutomatedBuildPCVR";
         string timeStamp = "_" + System.DateTime.Now.Month.ToString() + "M" + System.DateTime.Now.Day.ToString() + "D" + System.DateTime.Now.Hour.ToString() + "H" + System.DateTime.Now.Minute.ToString() + "m";
 
