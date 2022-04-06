@@ -54,6 +54,8 @@ public class BuildScript
         PlayerSettings.Android.keyaliasName = "district m key";
         PlayerSettings.Android.keyaliasPass = "8dsp?Q7mS87fHxRG";
 
+        // Check and create the Directories if doesn't exist
+        CreateBuildPaths();
         // Write the build name to file
         WriteBuildNameToFile(BuildTarget.Android, fullBuildNameForQuest);
 
@@ -81,6 +83,8 @@ public class BuildScript
         buildPlayerOptionsWindows.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptionsWindows.options = BuildOptions.None;
 
+        // Check and create the Directories if doesn't exist
+        CreateBuildPaths();
         // Write the build name to file
         WriteBuildNameToFile(BuildTarget.StandaloneWindows64, fullBuildNameForPCVR);
 
@@ -104,6 +108,22 @@ public class BuildScript
         StreamWriter writer = new StreamWriter(path, false);
         writer.WriteLine(buildName);
         writer.Close();
+    }
+
+    private static void CreateBuildPaths()
+    {
+        // In case the build paths are not created then create them before building
+        // Otherwise throws error
+        string rootBuildDirectory = "/BuildsOutput";
+        string questBuildDirectory = "BuildsOutput/Quest";
+        string pcvrBuildDirectory = "BuildsOutput/PCVR";
+
+        if (Directory.Exists(rootBuildDirectory) == false)
+            Directory.CreateDirectory(rootBuildDirectory);
+        if (Directory.Exists(questBuildDirectory) == false)
+            Directory.CreateDirectory(questBuildDirectory);
+        if (Directory.Exists(pcvrBuildDirectory) == false)
+            Directory.CreateDirectory(pcvrBuildDirectory);
     }
 
     /**************************************************************************************************************************************/
