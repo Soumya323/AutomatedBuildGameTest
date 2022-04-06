@@ -8,20 +8,24 @@ using System.IO;
 
 public class BuildScript
 {
-
     /**************************************************************************************************************************************/
     #region Final Build methods for Android and Windows
     /**************************************************************************************************************************************/
 
     public static void BuildAndroid()
     {
+        AutoLightBaker autoLightBaker = new AutoLightBaker();
+        autoLightBaker.BakeLightingForScenesInBuildSettings();
+
+
         string buildVersion = "1", buildVersionCode = "1", buildNameForQuestBase = "AutomatedBuildQuest_QA";
         string timeStamp = "_" + System.DateTime.Now.Month.ToString() + "M" + System.DateTime.Now.Day.ToString() + "D" + System.DateTime.Now.Hour.ToString() + "H" + System.DateTime.Now.Minute.ToString() + "m";
 
         List<string> scenePaths = new List<string>();
         foreach (EditorBuildSettingsScene scenePath in EditorBuildSettings.scenes)
         {
-            scenePaths.Add(scenePath.path);
+            if (scenePath.enabled)
+                scenePaths.Add(scenePath.path);
         }
         string[] allBuildScenes = scenePaths.ToArray();
 
@@ -60,7 +64,8 @@ public class BuildScript
         List<string> scenePaths = new List<string>();
         foreach (EditorBuildSettingsScene scenePath in EditorBuildSettings.scenes)
         {
-            scenePaths.Add(scenePath.path);
+            if (scenePath.enabled)
+                scenePaths.Add(scenePath.path);
         }
         string[] allBuildScenes = scenePaths.ToArray();
 
