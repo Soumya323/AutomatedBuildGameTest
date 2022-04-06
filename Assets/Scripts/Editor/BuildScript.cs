@@ -39,12 +39,15 @@ public class BuildScript
         PlayerSettings.Android.keyaliasName = "district m key";
         PlayerSettings.Android.keyaliasPass = "8dsp?Q7mS87fHxRG";
 
+        Console.WriteLine("Checkig and creating build path.");
         // Check and create the Directories if doesn't exist
         CreateBuildPaths();
 
+        Console.WriteLine("Writing build name to file.");
         // Write the build name to file
         WriteBuildNameToFile(BuildTarget.Android, fullBuildNameForQuest);
 
+        Console.WriteLine("Starting android build.");
         // Start the build
         BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptionsAndroid);
         BuildSummary buildSummary = buildReport.summary;
