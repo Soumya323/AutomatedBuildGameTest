@@ -95,21 +95,9 @@ public class BuildScript
     /**************************************************************************************************************************************/
     #endregion
     /**************************************************************************************************************************************/
-    #region Write the build name to text file
+    #region Create build paths if they don't exist
     /**************************************************************************************************************************************/
-
-    private static void WriteBuildNameToFile(BuildTarget buildTarget, string buildName)
-    {
-        string path = "";
-        if (buildTarget == BuildTarget.Android)
-            path = "BuildsOutput/Quest/" + "BuildNameQuest.txt";
-        else
-            path = "BuildsOutput/PCVR/" + "BuildNamePCVR.txt";
-        StreamWriter writer = new StreamWriter(path, false);
-        writer.WriteLine(buildName);
-        writer.Close();
-    }
-
+    
     private static void CreateBuildPaths()
     {
         // In case the build paths are not created then create them before building
@@ -124,6 +112,24 @@ public class BuildScript
             Directory.CreateDirectory(questBuildDirectory);
         if (Directory.Exists(pcvrBuildDirectory) == false)
             Directory.CreateDirectory(pcvrBuildDirectory);
+    }
+
+    /**************************************************************************************************************************************/
+    #endregion
+    /**************************************************************************************************************************************/
+    #region Write the build name to text file
+    /**************************************************************************************************************************************/
+
+    private static void WriteBuildNameToFile(BuildTarget buildTarget, string buildName)
+    {
+        string path = "";
+        if (buildTarget == BuildTarget.Android)
+            path = "BuildsOutput/Quest/" + "BuildNameQuest.txt";
+        else
+            path = "BuildsOutput/PCVR/" + "BuildNamePCVR.txt";
+        StreamWriter writer = new StreamWriter(path, false);
+        writer.WriteLine(buildName);
+        writer.Close();
     }
 
     /**************************************************************************************************************************************/
