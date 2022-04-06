@@ -9,21 +9,6 @@ public class BuildScript
 {
 
     /**************************************************************************************************************************************/
-    #region 
-    /**************************************************************************************************************************************/
-
-    private const string BuildVersionCommandQuest = "-buildVersionQuest";
-    private const string BuildVersionCodeCommandQuest = "-buildVersionCodeQuest";
-    private const string BuildApkNameCommandQuest = "-buildNameForQuest";
-    private const string BuildVersionCodeCommandPCVR = "-buildVersionCodePCVR";
-    private const string BuildNameCommandPCVR = "-buildNameForPCVR";
-
-    private const char CommandStartCharacter = '-';
-    private static Dictionary<string, string> commandToValueDictionary = default;
-
-    /**************************************************************************************************************************************/
-    #endregion
-    /**************************************************************************************************************************************/
     #region Final Build methods for Android and Windows
     /**************************************************************************************************************************************/
 
@@ -56,9 +41,11 @@ public class BuildScript
 
         // Check and create the Directories if doesn't exist
         CreateBuildPaths();
+
         // Write the build name to file
         WriteBuildNameToFile(BuildTarget.Android, fullBuildNameForQuest);
 
+        // Start the build
         BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptionsAndroid);
         BuildSummary buildSummary = buildReport.summary;
     }
@@ -85,9 +72,11 @@ public class BuildScript
 
         // Check and create the Directories if doesn't exist
         CreateBuildPaths();
+
         // Write the build name to file
         WriteBuildNameToFile(BuildTarget.StandaloneWindows64, fullBuildNameForPCVR);
 
+        // Start the build
         BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptionsWindows);
         BuildSummary buildSummary = buildReport.summary;
     }
@@ -97,7 +86,7 @@ public class BuildScript
     /**************************************************************************************************************************************/
     #region Create build paths if they don't exist
     /**************************************************************************************************************************************/
-    
+
     private static void CreateBuildPaths()
     {
         // In case the build paths are not created then create them before building
@@ -122,6 +111,9 @@ public class BuildScript
 
     private static void WriteBuildNameToFile(BuildTarget buildTarget, string buildName)
     {
+        // The build name is written to a text file
+        // Teamcity powershell script reads the name from it and puts the same name for the compressed build file for uploading
+
         string path = "";
         if (buildTarget == BuildTarget.Android)
             path = "BuildsOutput/Quest/" + "BuildNameQuest.txt";
@@ -130,46 +122,6 @@ public class BuildScript
         StreamWriter writer = new StreamWriter(path, false);
         writer.WriteLine(buildName);
         writer.Close();
-    }
-
-    /**************************************************************************************************************************************/
-    #endregion
-    /**************************************************************************************************************************************/
-    #region Read the commandline arguments
-    /**************************************************************************************************************************************/
-
-    private static Dictionary<string, string> GetCommandLineArguments()
-    {
-        Dictionary<string, string> commandToValueDictionary = new Dictionary<string, string>();
-
-        string[] args = System.Environment.GetCommandLineArgs();
-
-        for (int i = 0; i < args.Length; i++)
-        {
-            if (args[i].StartsWith(CommandStartCharacter.ToString()))
-            {
-                string command = args[i];
-                string value = string.Empty;
-
-                if (i < args.Length - 1 && !args[i + 1].StartsWith(CommandStartCharacter.ToString()))
-                {
-                    value = args[i + 1];
-                    i++;
-                }
-
-                if (!commandToValueDictionary.ContainsKey(command))
-                {
-                    commandToValueDictionary.Add(command, value);
-                }
-                else
-                {
-                    // BuildReporter.Current.Log("Duplicate command line argument " + command, BuildReporter.MessageSeverity.Warning);
-                    // Duplicate commandline argument
-                }
-            }
-        }
-
-        return commandToValueDictionary;
     }
 
     /**************************************************************************************************************************************/
