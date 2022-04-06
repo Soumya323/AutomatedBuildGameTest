@@ -40,12 +40,9 @@ public class BuildScript
         PlayerSettings.Android.keyaliasName = "district m key";
         PlayerSettings.Android.keyaliasPass = "8dsp?Q7mS87fHxRG";
 
-        Debug.Log("BuildScript : Checking and creating build path.");
         // Check and create the Directories if doesn't exist
         CreateBuildPaths();
 
-        Debug.Log("BuildScript : Writing build name to file.");
-        Console.WriteLine("BuildScript : Writing build name to file.");
         // Write the build name to file
         WriteBuildNameToFile(BuildTarget.Android, fullBuildNameForQuest);
 
@@ -81,6 +78,7 @@ public class BuildScript
         // Write the build name to file
         WriteBuildNameToFile(BuildTarget.StandaloneWindows64, fullBuildNameForPCVR);
 
+        Debug.Log("BuildScript : Starting windows build.");
         // Start the build
         BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptionsWindows);
         BuildSummary buildSummary = buildReport.summary;
@@ -100,6 +98,7 @@ public class BuildScript
         string questBuildDirectory = "BuildsOutput/Quest";
         string pcvrBuildDirectory = "BuildsOutput/PCVR";
 
+        Debug.Log("BuildScript : Checking and creating build path.");
         if (Directory.Exists(rootBuildDirectory) == false)
             Directory.CreateDirectory(rootBuildDirectory);
         if (Directory.Exists(questBuildDirectory) == false)
@@ -119,6 +118,7 @@ public class BuildScript
         // The build name is written to a text file
         // Teamcity powershell script reads the name from it and puts the same name for the compressed build file for uploading
 
+        Debug.Log("BuildScript : Writing build name to file.");
         string path = "";
         if (buildTarget == BuildTarget.Android)
             path = "BuildsOutput/Quest/" + "BuildNameQuest.txt";
