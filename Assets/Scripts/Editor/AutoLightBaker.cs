@@ -20,31 +20,6 @@ public class AutoLightBaker : OdinEditorWindow
     {
 
         BakeLightingForScenesInBuildSettings();
-        /*
-        EditorBuildSettingsScene[] scenes = EditorBuildSettings.scenes;
-
-        string openScenePath = scenes[0].path;
-        EditorSceneManager.OpenScene(openScenePath, OpenSceneMode.Single);
-
-        GameObject lightbakeObj = GameObject.Find("AutoLightBakerPrepareScene");
-
-        if (lightbakeObj != null)
-        {
-            if (lightbakeObj.TryGetComponent<AutoLightBakerPrepareScene>(out AutoLightBakerPrepareScene lightBakePrepareScene))
-            {
-                lightBakePrepareScene.MakeObjectsStatic();
-                BakeScenes(openScenePath);
-                lightBakePrepareScene.MakeObjectsNonStatic();
-                EditorSceneManager.SaveOpenScenes();
-            }
-            else
-                Debug.LogWarning("AutoLightBaker : AutoLightBakerPrepareScene object found but the script on it wasn't found, scene is " + openScenePath);
-        }
-        else
-        {
-            Debug.LogWarning("AutoLightBaker : AutoLightBakerPrepareScene object is missing add it for building the light, scene is " + openScenePath);
-        }
-        */
     }
 
     private void BakeScenes(string scenePath)
