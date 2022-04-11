@@ -6,7 +6,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using System.IO;
 
-public class BuildScript
+public static class BuildScript
 {
     /**************************************************************************************************************************************/
     #region Final Build methods for Android and Windows
